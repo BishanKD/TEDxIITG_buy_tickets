@@ -2,7 +2,6 @@ const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
 const Ticket = require("../models/ticketModel");
 
-// Email setup
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
@@ -21,7 +20,7 @@ const generateOtp = async (req, res) => {
   try {
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
     const hashedOtp = await bcrypt.hash(otp, 10);
-    const otpExpires = new Date(Date.now() + 10 * 60000); // OTP valid for 10 minutes
+    const otpExpires = new Date(Date.now() + 10 * 60000);
 
     let ticket = await Ticket.findOne({ email });
     if (ticket) {
